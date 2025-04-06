@@ -1,0 +1,12 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: "proto-api/gen"
+plugins:
+  - plugin: buf.build/protocolbuffers/go
+    out: sign/api/proto/gen
+    opt: paths=source_relative
+  - plugin: buf.build/grpc/go
+    out: sign/api/proto/gen
+    opt: paths=source_relative

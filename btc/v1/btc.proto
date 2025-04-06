@@ -1,0 +1,234 @@
+syntax = "proto3";
+package proto.v1;
+option go_package="proto-api/v1;btcv1";
+
+enum ReturnCode {
+  SUCCESS = 0;
+  ERROR = 1;
+}
+
+enum TxStatus {
+  NotFound = 0;
+  Pending = 1;
+  Failed = 2;
+  Success = 3;
+  ContractExecuteFailed = 4;
+  Other = 5;
+}
+
+message Vin {
+   string hash = 1;
+   uint32 vout = 2;
+   uint64 amount = 3;
+   string address = 4;
+   uint64 sequence = 5;
+}
+
+message Vout {
+  string address = 1;
+  uint64 amount = 2;
+  uint32 Index = 3;
+  ScriptPubKey script_pubKey = 4;
+}
+
+message ScriptPubKey {
+  // Define fields for ScriptPubKey
+  string  asm = 1;
+  string  desc = 2;
+  string  hex = 3;
+  string  address = 4;
+  string  type = 5;
+}
+
+message Address {
+  string address = 1;
+}
+
+message Value {
+  // Define fields for Value
+  string value = 1;
+}
+
+message TxMessage {
+  string hash   = 1;
+  uint32 index  = 2;
+  repeated Address froms = 3;
+  repeated Address tos = 4;
+  repeated Value values = 5;
+  string Fee  = 6;
+  TxStatus status = 7;
+  int32 Type = 8;
+  string Height = 9;
+  string brc20_address = 10;
+  string datetime = 11;
+}
+
+message ConvertAddressRequest {
+  string consumer_token = 1;
+  string network = 2;
+  string format = 3;
+  string public_key = 4;
+}
+
+message ConvertAddressResponse {
+  ReturnCode code = 1;
+  string msg = 2;
+  string address = 3;
+}
+
+message ValidAddressRequest {
+  string consumer_token = 1;
+  string network = 2;
+  string format = 3;
+  string address = 4;
+}
+
+message ValidAddressResponse {
+  ReturnCode code = 1;
+  string msg = 2;
+  bool valid = 3;
+}
+
+message AccountRequest {
+  string consumer_token = 1;
+  string network = 2;
+  string address = 3;
+  string brc20_address = 4;
+}
+
+message AccountResponse {
+  ReturnCode code = 1; // 返回码
+  string msg = 2; // 消息
+  string network = 3; // 网络
+  string balance = 4; // 余额
+}
+
+message UnspentOutput {
+  // Define fields for UnspentOutput
+}
+
+message UnspentOutputsRequest {
+  // Define fields for UnspentOutputsRequest
+}
+
+message UnspentOutputsResponse {
+  ReturnCode code = 1;
+  repeated UnspentOutput unspent_outputs = 2;
+}
+
+message BlockNumberRequest {
+  // Define fields for BlockNumberRequest
+}
+
+message BlockHashRequest {
+  // Define fields for BlockHashRequest
+}
+
+message TransactionList {
+  repeated Vin vin = 1;
+  repeated Vout vout = 2;
+}
+
+message BlockResponse {
+  ReturnCode code = 1;
+  repeated TransactionList tx_list = 2;
+}
+
+message BlockHeaderHashRequest {
+  // Define fields for BlockHeaderHashRequest
+}
+
+message BlockHeaderNumberRequest {
+  // Define fields for BlockHeaderNumberRequest
+}
+
+message BlockHeaderResponse {
+  ReturnCode code = 1;
+  // Define other fields for BlockHeaderResponse
+}
+
+message SendTxRequest {
+  // Define fields for SendTxRequest
+}
+
+message SendTxResponse {
+  ReturnCode code = 1;
+  // Define other fields for SendTxResponse
+}
+
+message TxAddressRequest {
+  // Define fields for TxAddressRequest
+}
+
+message TxAddressResponse {
+  ReturnCode code = 1;
+  TxMessage tx = 2;
+}
+
+message TxHashRequest {
+  // Define fields for TxHashRequest
+}
+
+message TxHashResponse {
+  ReturnCode code = 1;
+  TxMessage tx = 2;
+}
+
+message UnSignTransactionRequest {
+  repeated Vin vin = 1;
+  repeated Vout vout = 2;
+}
+
+message UnSignTransactionResponse {
+  ReturnCode code = 1;
+  // Define other fields for UnSignTransactionResponse
+}
+
+message SignedTransactionRequest {
+  // Define fields for SignedTransactionRequest
+}
+
+message SignedTransactionResponse {
+  ReturnCode code = 1;
+  // Define other fields for SignedTransactionResponse
+}
+
+message VerifyTransactionRequest {
+  // Define fields for VerifyTransactionRequest
+}
+
+message VerifyTransactionResponse {
+  ReturnCode code = 1;
+  // Define other fields for VerifyTransactionResponse
+}
+
+message DecodeTransactionRequest {
+  repeated Vin vins = 1;
+  // Define other fields for DecodeTransactionRequest
+}
+
+message DecodeTransactionResponse {
+  ReturnCode code = 1;
+  TxStatus status = 2;
+  repeated Vin vins = 3;
+  repeated Vout vouts = 4;
+}
+
+service WalletBtcService {
+  rpc convertAddress(ConvertAddressRequest) returns (ConvertAddressResponse);
+  rpc validAddress(ValidAddressRequest) returns (ValidAddressResponse);
+  rpc getAccount(AccountRequest) returns (AccountResponse);
+  rpc getUnspentOutputs(UnspentOutputsRequest) returns (UnspentOutputsResponse);
+  rpc getBlockByNumber(BlockNumberRequest) returns (BlockResponse);
+  rpc getBlockByHash(BlockHashRequest) returns (BlockResponse);
+  rpc getBlockHeaderByHash(BlockHeaderHashRequest) returns (BlockHeaderResponse);
+  rpc getBlockHeaderByNumber(BlockHeaderNumberRequest) returns (BlockHeaderResponse);
+  rpc SendTx(SendTxRequest) returns (SendTxResponse);
+  rpc getTxByAddress(TxAddressRequest) returns (TxAddressResponse);
+  rpc getTxByHash(TxHashRequest) returns (TxHashResponse);
+  rpc buildUnSignTransaction(UnSignTransactionRequest) returns (UnSignTransactionResponse);
+  rpc buildSignedTransaction(SignedTransactionRequest) returns (SignedTransactionResponse);
+  rpc decodeTransaction(DecodeTransactionRequest) returns (DecodeTransactionResponse);
+  rpc verifySignedTransaction(VerifyTransactionRequest) returns (VerifyTransactionResponse);
+}
+    ```
