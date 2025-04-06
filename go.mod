@@ -1,4 +1,4 @@
-module proto-api
+module github.com/web3-fighter/proto-api
 
 go 1.22.8
 
