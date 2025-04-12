@@ -87,6 +87,7 @@ type Vin struct {
 	Index   uint32 `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty"`
 	Amount  int64  `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
 	Address string `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
+	Vout          uint32  `protobuf:"varint,5,opt,name=vout,proto3" json:"vout,omitempty"`
 }
 
 func (x *Vin) Reset() {
@@ -149,6 +150,82 @@ func (x *Vin) GetAddress() string {
 	return ""
 }
 
+type ScriptPubKey struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Asm           string                 `protobuf:"bytes,1,opt,name=asm,proto3" json:"asm,omitempty"`
+	Desc          string                 `protobuf:"bytes,2,opt,name=desc,proto3" json:"desc,omitempty"`
+	Hex           string                 `protobuf:"bytes,3,opt,name=hex,proto3" json:"hex,omitempty"`
+	Address       string                 `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
+	Type          string                 `protobuf:"bytes,5,opt,name=type,proto3" json:"type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ScriptPubKey) Reset() {
+	*x = ScriptPubKey{}
+	mi := &file_dapplink_utxo_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ScriptPubKey) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScriptPubKey) ProtoMessage() {}
+
+func (x *ScriptPubKey) ProtoReflect() protoreflect.Message {
+	mi := &file_dapplink_utxo_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScriptPubKey.ProtoReflect.Descriptor instead.
+func (*ScriptPubKey) Descriptor() ([]byte, []int) {
+	return file_dapplink_utxo_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ScriptPubKey) GetAsm() string {
+	if x != nil {
+		return x.Asm
+	}
+	return ""
+}
+
+func (x *ScriptPubKey) GetDesc() string {
+	if x != nil {
+		return x.Desc
+	}
+	return ""
+}
+
+func (x *ScriptPubKey) GetHex() string {
+	if x != nil {
+		return x.Hex
+	}
+	return ""
+}
+
+func (x *ScriptPubKey) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *ScriptPubKey) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
 type Vout struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -157,6 +234,7 @@ type Vout struct {
 	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
 	Amount  int64  `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`
 	Index   uint32 `protobuf:"varint,3,opt,name=index,proto3" json:"index,omitempty"`
+	ScriptPubKey  *ScriptPubKey          `protobuf:"bytes,4,opt,name=script_pubKey,json=scriptPubKey,proto3" json:"script_pubKey,omitempty"`
 }
 
 func (x *Vout) Reset() {
