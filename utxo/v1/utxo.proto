@@ -231,4 +231,3 @@ service WalletBtcService {
   rpc decodeTransaction(DecodeTransactionRequest) returns (DecodeTransactionResponse);
   rpc verifySignedTransaction(VerifyTransactionRequest) returns (VerifyTransactionResponse);
 }
-    ```
