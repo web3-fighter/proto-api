@@ -1,0 +1,247 @@
+syntax = "proto3";
+
+option go_package = "./protobuf/pb";
+package selaginella.proto_rpc;
+
+// BridgeService 定义了桥接服务的接口，用于处理跨链操作。
+service BridgeService {
+  // crossChainTransfer 处理跨链转账请求。
+  rpc crossChainTransfer(CrossChainTransferRequest) returns (CrossChainTransferResponse);
+  // changeTransferStatus 更改转账状态。
+  rpc changeTransferStatus(CrossChainTransferStatusRequest) returns (CrossChainTransferStatusResponse);
+  // UpdateDepositFundingPoolBalance 更新存款资金池余额。
+  rpc UpdateDepositFundingPoolBalance(UpdateDepositFundingPoolBalanceRequest) returns (UpdateDepositFundingPoolBalanceResponse);
+  // UpdateWithdrawFundingPoolBalance 更新提款资金池余额。
+  rpc UpdateWithdrawFundingPoolBalance(UpdateWithdrawFundingPoolBalanceRequest) returns (UpdateWithdrawFundingPoolBalanceResponse);
+  // UnstakeBatch 批量解押。
+  rpc UnstakeBatch(UnstakeBatchRequest) returns (UnstakeBatchResponse);
+  // MigrateL1Shares 迁移 L1 份额。
+  rpc MigrateL1Shares(MigrateL1SharesRequest) returns (MigrateL1SharesResponse);
+  // TransferToL2DappLinkBridge 转移到 L2 DappLink 桥。
+  rpc TransferToL2DappLinkBridge(TransferToL2DappLinkBridgeRequest) returns (TransferToL2DappLinkBridgeResponse);
+  // BatchMint 批量铸造。
+  rpc BatchMint(BatchMintRequest) returns (BatchMintResponse);
+  // TransferL2Share 转移 L2 份额。
+  rpc TransferL2Share(TransferL2ShareRequest) returns (TransferL2ShareResponse);
+  // GasOracle 获取 Gas 预言机数据。
+  rpc GasOracle(GasOracleRequest) returns (GasOracleResponse);
+}
+
+// CrossChainTransferRequest 跨链转账请求消息。
+message CrossChainTransferRequest {
+  // 源链 ID。
+  string source_chain_id = 1;
+  // 目标链 ID。
+  string dest_chain_id = 2;
+  // 接收地址。
+  string receive_address = 3;
+  // 转账金额。
+  string amount = 4;
+  // 代币地址。
+  string token_address = 5;
+  // 交易费用。
+  string fee = 6;
+  // 随机数。
+  string nonce = 7;
+  // 源交易哈希。
+  string source_hash = 8;
+}
+
+// CrossChainTransferResponse 跨链转账响应消息。
+message CrossChainTransferResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
+
+// CrossChainTransferStatusRequest 跨链转账状态请求消息。
+message CrossChainTransferStatusRequest {
+  // 源链 ID。
+  string source_chain_id = 1;
+  // 目标链 ID。
+  string dest_chain_id = 2;
+  // 交易哈希。
+  string tx_hash = 3;
+}
+
+// CrossChainTransferStatusResponse 跨链转账状态响应消息。
+message CrossChainTransferStatusResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
+
+// UpdateDepositFundingPoolBalanceRequest 更新存款资金池余额请求消息。
+message UpdateDepositFundingPoolBalanceRequest {
+  // 源链 ID。
+  string source_chain_id = 1;
+  // 目标链 ID。
+  string dest_chain_id = 2;
+  // 接收地址。
+  string receive_address = 3;
+  // 金额。
+  string amount = 4;
+  // 代币地址。
+  string token_address = 5;
+  // 源交易哈希。
+  string source_hash = 6;
+}
+
+// UpdateDepositFundingPoolBalanceResponse 更新存款资金池余额响应消息。
+message UpdateDepositFundingPoolBalanceResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
+
+// UpdateWithdrawFundingPoolBalanceRequest 更新提款资金池余额请求消息。
+message UpdateWithdrawFundingPoolBalanceRequest {
+  // 源链 ID。
+  string source_chain_id = 1;
+  // 目标链 ID。
+  string dest_chain_id = 2;
+  // 接收地址。
+  string receive_address = 3;
+  // 金额。
+  string amount = 4;
+  // 代币地址。
+  string token_address = 5;
+  // 源交易哈希。
+  string source_hash = 6;
+}
+
+// UpdateWithdrawFundingPoolBalanceResponse 更新提款资金池余额响应消息。
+message UpdateWithdrawFundingPoolBalanceResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
+
+// UnstakeBatchRequest 批量解押请求消息。
+message UnstakeBatchRequest {
+  // 策略映射。
+  map<string, uint64> strategy = 1;
+  // 源链 ID。
+  string source_chain_id = 2;
+  // 目标链 ID。
+  string dest_chain_id = 3;
+  // Gas 限制。
+  string gas_limit = 4;
+  // 源交易哈希。
+  string source_hash = 5;
+}
+
+// UnstakeBatchResponse 批量解押响应消息。
+message UnstakeBatchResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
+
+// MigrateL1SharesRequest 迁移 L1 份额请求消息。
+message MigrateL1SharesRequest {
+  // 策略。
+  string strategies = 1;
+  // 份额。
+  string shares = 2;
+  // L1 解押消息随机数。
+  uint64 l1UnStakeMessageNonce = 3;
+  // 提款人地址。
+  string withdrawer = 4;
+  // 链 ID。
+  string chain_id = 5;
+  // 源交易哈希。
+  string source_hash = 6;
+}
+
+// MigrateL1SharesResponse 迁移 L1 份额响应消息。
+message MigrateL1SharesResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
+
+// TransferToL2DappLinkBridgeRequest 转移到 L2 DappLink 桥请求消息。
+message TransferToL2DappLinkBridgeRequest {
+  // 批次。
+  uint64 batch = 1;
+  // 链 ID。
+  string chain_id = 2;
+  // 策略地址。
+  string strategy_address = 3;
+}
+
+// TransferToL2DappLinkBridgeResponse 转移到 L2 DappLink 桥响应消息。
+message TransferToL2DappLinkBridgeResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
+
+// BatchMintRequest 批量铸造请求消息。
+message BatchMintRequest {
+  // 批次。
+  uint64 batch = 1;
+  // 铸造映射。
+  map<string, string> Mint = 2;
+}
+
+// BatchMintResponse 批量铸造响应消息。
+message BatchMintResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
+
+// ShareMap 份额映射。
+message ShareMap {
+  // 份额映射。
+  map<string, string> share_map = 1;
+}
+
+// TransferL2ShareRequest 转移 L2 份额请求消息。
+message TransferL2ShareRequest {
+  // 份额请求映射。
+  map<uint64, ShareMap> shareRequest = 1;
+  // 发送方地址。
+  string from = 2;
+  // 接收方地址。
+  string to = 3;
+  // 质押消息随机数。
+  uint64 stakeMessageNonce = 4;
+}
+
+// TransferL2ShareResponse 转移 L2 份额响应消息。
+message TransferL2ShareResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
+
+
+// GasOracleRequest Gas 预言机请求消息。
+message GasOracleRequest {
+  // L1 费用。
+  string l1_fee = 1;
+  // Optimism 费用。
+  string op_fee = 2;
+  // Scroll 费用。
+  string scroll_fee = 3;
+}
+
+// GasOracleResponse Gas 预言机响应消息。
+message GasOracleResponse {
+  // 是否成功。
+  bool success = 1;
+  // 响应消息。
+  string message = 2;
+}
